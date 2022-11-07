@@ -18,5 +18,13 @@
 from sympy import *
 
 x = Symbol('x')
-f = x ** 3 - x * 52 + 96  # заданная функция из задания
-print(f)
+f0 = x ** 3 - x * 52 + 96  # заданная функция из задания
+f_list = []
+f_list.append(f0)
+
+f1 = diff(f0, x)
+f_list.append(f1)
+# print(solve(Eq(f), x))  # решить уравнение f=0, выводит [ответ1,ответ2,...]
+# print(diff(f, x))  # найти производную функции F=0
+print(f0)
+print(f_list)
