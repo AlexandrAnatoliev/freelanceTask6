@@ -53,7 +53,7 @@ def degree_x(function):
 def residue_func(func0, func1):
     # функция приводящая две функции к одному виду и опредяляющая остаток их разности, взятый с обратным знаком
     f0_reduction = expand(func0 * coeff_before_x(func1))
-    f1_reduction = expand(func1 * coeff_before_x(func0) * (x * (degree_x(func0) - degree_x(func1))))
+    f1_reduction = expand(func1 * coeff_before_x(func0) * (x ** (degree_x(func0) - degree_x(func1))))
     func2 = -(f0_reduction - f1_reduction)
     return func2
 
@@ -72,6 +72,9 @@ f_list.append(f1)
 f_list.append(residue_func(f_list[0], f_list[1]))
 f_list.append(residue_func(f_list[1], f_list[2]))
 f_list.append(residue_func(f_list[2], f_list[3]))
+
+# !!! прочитать определение остатка при делении функций!!!
+
 # print(solve(Eq(f), x))  # решить уравнение f=0, выводит [ответ1,ответ2,...]
 # print(diff(f, x))  # найти производную функции F=0
 
