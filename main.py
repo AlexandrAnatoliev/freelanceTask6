@@ -17,17 +17,6 @@
 
 from sympy import *
 
-x = Symbol('x')  # объясняем программе что 'x' это символ, а не переменная
-
-f = (x - 2) * (x - 6) * (x + 8)  # заданная функция из задания
-f0 = expand(f)  # раскрываем скобки
-# f0 = x ** 3 - 52 * x + 96  # заданная функция из задания
-f_list = []
-f_list.append(f0)
-
-f1 = diff(f0, x)  # дифференцируем
-f_list.append(f1)
-
 
 def coeff_before_x(function):
     # функция, определяющая коэффициент перед первым 'x' в уравнении
@@ -51,10 +40,27 @@ def degree_x(function):
     return degree_x
 
 
-f2 = expand(f1 * x / 3)
+def residue_func(func0, func1):
+    # функция приводящая две функции к одному виду и опредяляющая остаток их разности, взятый с обратным знаком
+    f0_reduction = expand(func0 * coeff_before_x(func1))
+    f1_reduction = expand(func1 * coeff_before_x(func0) * (x * (degree_x(func0) - degree_x(func1))))
+    func2 = -(f0_reduction - f1_reduction)
+    return func2
+
+
+x = Symbol('x')  # объясняем программе что 'x' это символ, а не переменная
+
+f = (x - 2) * (x - 6) * (x + 8)  # заданная функция из задания
+f0 = expand(f)  # раскрываем скобки
+# f0 = x ** 3 - 52 * x + 96  # заданная функция из задания
+f_list = []
+f_list.append(f0)
+
+f1 = diff(f0, x)  # дифференцируем
+f_list.append(f1)
+f2 = residue_func(f0, f1)
 # print(solve(Eq(f), x))  # решить уравнение f=0, выводит [ответ1,ответ2,...]
 # print(diff(f, x))  # найти производную функции F=0
-print(f0)
+
 print(f_list)
-print(coeff_before_x(f1))
-print(degree_x(f1))
+print(f2)
