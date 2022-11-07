@@ -40,9 +40,21 @@ def coeff_before_x(function):
     return coefficient
 
 
+def degree_x(function):
+    # функция, определяющая степень первого 'x' в уравнении
+    f_string = str(function)
+    x_index = f_string.index('x')
+    if f_string[x_index + 1] == '*' and f_string[x_index + 2] == '*':
+        degree_x = int(f_string[x_index + 3])
+    else:
+        degree_x = 1
+    return degree_x
+
+
 f2 = expand(f1 * x / 3)
 # print(solve(Eq(f), x))  # решить уравнение f=0, выводит [ответ1,ответ2,...]
 # print(diff(f, x))  # найти производную функции F=0
 print(f0)
 print(f_list)
 print(coeff_before_x(f1))
+print(degree_x(f1))
