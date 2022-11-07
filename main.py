@@ -13,6 +13,7 @@
 #
 # Обязательно с комментариями к коду и с описанием алгоритма в виде блок-схемы/по пунктам.
 
+# pip install sympy
 
 def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.
