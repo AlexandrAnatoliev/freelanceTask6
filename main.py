@@ -22,10 +22,17 @@ def coeff_before_x(function):
     # функция, определяющая коэффициент перед первым 'x' в уравнении
     f_string = str(function)
     x_index = f_string.index('x')
+    if ' ' in f_string[:x_index]:  # если есть пробел перед 'x'
+        space_count = f_string.count(' ', 0, x_index)  # число пробелов до 'x'
+        space_index = 0
+        for i in range(space_count):
+            space_index = f_string.find(' ', space_index + 1, x_index)
+    else:
+        space_index = -1
     if x_index == 0:
         coefficient = 1
     else:
-        coefficient = int(f_string[:x_index - 1])
+        coefficient = int(f_string[space_index + 1:x_index - 1])
     return coefficient
 
 
@@ -33,10 +40,13 @@ def degree_x(function):
     # функция, определяющая степень первого 'x' в уравнении
     f_string = str(function)
     x_index = f_string.index('x')
-    if f_string[x_index + 1] == '*' and f_string[x_index + 2] == '*':
-        degree_x = int(f_string[x_index + 3])
-    else:
+    if x_index == len(f_string) - 1:  # если 'x' крайний справа
         degree_x = 1
+    else:
+        if f_string[x_index + 1] == '*' and f_string[x_index + 2] == '*':
+            degree_x = int(f_string[x_index + 3])
+        else:
+            degree_x = 1
     return degree_x
 
 
@@ -51,16 +61,18 @@ def residue_func(func0, func1):
 x = Symbol('x')  # объясняем программе что 'x' это символ, а не переменная
 
 f = (x - 2) * (x - 6) * (x + 8)  # заданная функция из задания
-f0 = expand(f)  # раскрываем скобки
-# f0 = x ** 3 - 52 * x + 96  # заданная функция из задания
-f_list = []
-f_list.append(f0)
-
+f0 = expand(f)  # раскрываем скобки и приводим функцию к виду f0 = x ** 3 - 52 * x + 96
 f1 = diff(f0, x)  # дифференцируем
+
+f_list = []  # список функций
+f_list.append(f0)
 f_list.append(f1)
-f2 = residue_func(f0, f1)
+# i = 0
+# while f_list[i+1] != 0:
+f_list.append(residue_func(f_list[0], f_list[1]))
+f_list.append(residue_func(f_list[1], f_list[2]))
+f_list.append(residue_func(f_list[2], f_list[3]))
 # print(solve(Eq(f), x))  # решить уравнение f=0, выводит [ответ1,ответ2,...]
 # print(diff(f, x))  # найти производную функции F=0
 
 print(f_list)
-print(f2)
