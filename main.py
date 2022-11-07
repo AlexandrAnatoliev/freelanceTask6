@@ -28,8 +28,21 @@ f_list.append(f0)
 f1 = diff(f0, x)  # дифференцируем
 f_list.append(f1)
 
+
+def coeff_before_x(function):
+    # функция, определяющая коэффициент перед первым 'x' в уравнении
+    f_string = str(function)
+    x_index = f_string.index('x')
+    if x_index == 0:
+        coefficient = 1
+    else:
+        coefficient = int(f_string[:x_index - 1])
+    return coefficient
+
+
 f2 = expand(f1 * x / 3)
 # print(solve(Eq(f), x))  # решить уравнение f=0, выводит [ответ1,ответ2,...]
 # print(diff(f, x))  # найти производную функции F=0
 print(f0)
 print(f_list)
+print(coeff_before_x(f1))
