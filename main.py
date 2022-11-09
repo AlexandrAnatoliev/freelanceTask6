@@ -51,11 +51,20 @@ def degree_x(function):
 
 
 def residue_func(func0, func1):
-    # функция приводящая две функции к одному виду и опредяляющая остаток их разности, взятый с обратным знаком
+    # функция приводящая две функции к одному виду и опредяляющая остаток их разности
     f0_reduction = expand(func0 * coeff_before_x(func1))
     f1_reduction = expand(func1 * coeff_before_x(func0) * (x ** (degree_x(func0) - degree_x(func1))))
-    func2 = -(f0_reduction - f1_reduction)
+    func2 = f0_reduction - f1_reduction
     return func2
+
+
+def calculate_residue(func1, func2):
+    # функция, определяющая нужно ли дальше вычислять остаток
+    if degree_x(func2) < degree_x(func1):  # если степень остатка меньше степени функции, на которую делят
+        residue = -func2
+    else:
+        residue = -residue_func(func2, func1)  # иначе - еще раз вычисляем
+    return residue
 
 
 x = Symbol('x')  # объясняем программе что 'x' это символ, а не переменная
@@ -69,9 +78,9 @@ f_list.append(f0)
 f_list.append(f1)
 # i = 0
 # while f_list[i+1] != 0:
-f_list.append(residue_func(f_list[0], f_list[1]))
-f_list.append(residue_func(f_list[1], f_list[2]))
-f_list.append(residue_func(f_list[2], f_list[3]))
+f_list.append(calculate_residue(f_list[1], residue_func(f_list[0], f_list[1])))
+# f_list.append(calculate_residue(f_list[1], f_list[2]))
+# f_list.append(calculate_residue(f_list[2], f_list[3]))
 
 # !!! прочитать определение остатка при делении функций!!!
 
