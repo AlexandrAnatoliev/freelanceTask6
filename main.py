@@ -76,11 +76,15 @@ f1 = diff(f0, x)  # дифференцируем
 f_list = []  # список функций
 f_list.append(f0)
 f_list.append(f1)
-# i = 0
-# while f_list[i+1] != 0:
-f_list.append(calculate_residue(f_list[1], residue_func(f_list[0], f_list[1])))
-# f_list.append(calculate_residue(f_list[1], f_list[2]))
-# f_list.append(calculate_residue(f_list[2], f_list[3]))
+fl = True  # начало цикла занесения формул в список
+i = 0
+while fl == True:
+    f_list.append(calculate_residue(f_list[i + 1], residue_func(f_list[i], f_list[i + 1])))
+    if diff(f_list[i + 2], x) == 0:  # пока остаток не является функцией (производная числа = 0)
+        fl = False  # стоп цикл
+    i += 1
+
+# f_list.append(calculate_residue(f_list[2], residue_func(f_list[1], f_list[2])))
 
 # !!! прочитать определение остатка при делении функций!!!
 
