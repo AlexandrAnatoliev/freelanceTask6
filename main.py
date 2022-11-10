@@ -152,10 +152,12 @@ def count_sign_change(lst, index):
     return count
 
 
-# print(solve(Eq(f), x))  # решить уравнение f=0, выводит [ответ1,ответ2,...]
-# print(diff(f, x))  # найти производную функции F=0
+inf_table = create_shturm_table(f_list)  # таблица Штурма для плюс\минус бесконечности
+valid_roots = abs(count_sign_change(inf_table, 0) - count_sign_change(inf_table, 1))  # количество действительных корней
 
 print(f_list)
-table = create_shturm_table(f_list)
-print(table)
-print(count_sign_change(table, 1))
+print(inf_table)
+print(valid_roots)
+
+# print(solve(Eq(f), x))  # решить уравнение f=0, выводит [ответ1,ответ2,...]
+# print(diff(f, x))  # найти производную функции F=0
