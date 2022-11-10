@@ -96,11 +96,6 @@ while fl == True:
         fl = False  # стоп цикл
     i += 1
 
-# print(solve(Eq(f), x))  # решить уравнение f=0, выводит [ответ1,ответ2,...]
-# print(diff(f, x))  # найти производную функции F=0
-
-print(f_list)
-
 
 # Создание таблицы Штурма
 # **********************************************************************************************************************
@@ -129,6 +124,7 @@ def define_sign_infinity(func):
 
 
 def create_shturm_table(lst):
+    # создание таблицы Штурма при минус\плюс бесконечности
     table = []
     for i in range(len(lst)):
         table.append(define_sign_infinity(lst[i]))
@@ -145,5 +141,21 @@ def define_sign_before_number(func):
     return fl
 
 
+def count_sign_change(lst, index):
+    # функция, считающая число изменений знака в системе Штурма
+    fl = lst[0][index]  # начальное значение
+    count = 0
+    for i in range(len(lst)):
+        if lst[i][index] != fl:
+            fl = lst[i][index]
+            count += 1
+    return count
+
+
+# print(solve(Eq(f), x))  # решить уравнение f=0, выводит [ответ1,ответ2,...]
+# print(diff(f, x))  # найти производную функции F=0
+
+print(f_list)
 table = create_shturm_table(f_list)
 print(table)
+print(count_sign_change(table, 1))
