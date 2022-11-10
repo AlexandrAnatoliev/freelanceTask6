@@ -41,14 +41,17 @@ def coeff_before_x(function):
 def degree_x(function):
     # функция, определяющая степень первого 'x' в уравнении
     f_string = str(function)
-    x_index = f_string.index('x')
-    if x_index == len(f_string) - 1:  # если 'x' крайний справа
-        degree_x = 1
-    else:
-        if f_string[x_index + 1] == '*' and f_string[x_index + 2] == '*':
-            degree_x = int(f_string[x_index + 3])
-        else:
+    if 'x' in f_string:
+        x_index = f_string.index('x')
+        if x_index == len(f_string) - 1:  # если 'x' крайний справа
             degree_x = 1
+        else:
+            if f_string[x_index + 1] == '*' and f_string[x_index + 2] == '*':
+                degree_x = int(f_string[x_index + 3])
+            else:
+                degree_x = 1
+    else:
+        degree_x = 0
     return degree_x
 
 
@@ -99,19 +102,35 @@ while fl == True:
 print(f_list)
 
 
-#  Определим знаки  многочленов при плюс и при минус бесконечность. Вычислять  ничего не нужно.
-#  Достаточно посмотреть только на коэффициенты при старших степенях и на сами эти степени.
+# Создание таблицы Штурма
+# **********************************************************************************************************************
+
+# Определим знаки  многочленов при плюс и при минус бесконечность. Вычислять  ничего не нужно.
+# Достаточно посмотреть только на коэффициенты при старших степенях и на сами эти степени.
 
 
 def define_sign_infinity(func):
     # функция опеделяющая знак функции при плюс/минус-бесконечности
-    if degree_x(func) % 2 == 0:  # если функция четная
-        sign_plus_inf = '+'  # знак функции при плюс-бесконечности
-        sign_minus_inf = '+'  # знак функции при минус-бесконечности
-    else:
+    if degree_x(func) == 0:
         sign_plus_inf = '+'
         sign_minus_inf = '-'
+    else:
+        if degree_x(func) % 2 == 0:  # если функция четная
+            sign_plus_inf = '+'  # знак функции при плюс-бесконечности
+            sign_minus_inf = '+'  # знак функции при минус-бесконечности
+        else:
+            sign_plus_inf = '+'
+            sign_minus_inf = '-'
     return sign_plus_inf, sign_minus_inf
 
 
-print(define_sign_infinity(f_list[0])[0])
+def create_shturm_table(lst):
+    table = []
+    for i in range(len(lst)):
+        table.append(define_sign_infinity(lst[i]))
+    return table
+
+
+print(define_sign_infinity(f_list[3]))
+
+# table = create_shturm_table(f_list)
