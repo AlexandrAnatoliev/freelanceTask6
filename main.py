@@ -111,9 +111,13 @@ print(f_list)
 
 def define_sign_infinity(func):
     # функция опеделяющая знак функции при плюс/минус-бесконечности
-    if degree_x(func) == 0:
-        sign_plus_inf = '+'
-        sign_minus_inf = '-'
+    if degree_x(func) == 0:  # если функция - число
+        if define_sign_before_number(func) == 'plus':  # если знак перед числом 'плюс'
+            sign_plus_inf = '+'
+            sign_minus_inf = '-'
+        else:
+            sign_plus_inf = '-'
+            sign_minus_inf = '+'
     else:
         if degree_x(func) % 2 == 0:  # если функция четная
             sign_plus_inf = '+'  # знак функции при плюс-бесконечности
@@ -131,6 +135,15 @@ def create_shturm_table(lst):
     return table
 
 
-print(define_sign_infinity(f_list[3]))
+def define_sign_before_number(func):
+    # функция, определяющая знак перед первым числом
+    func = str(func)
+    if func[0] == '-':
+        fl = 'minus'
+    else:
+        fl = 'plus'
+    return fl
 
-# table = create_shturm_table(f_list)
+
+table = create_shturm_table(f_list)
+print(table)
