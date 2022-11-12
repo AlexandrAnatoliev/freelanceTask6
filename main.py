@@ -148,9 +148,10 @@ def count_sign_change(lst, index):
     fl = lst[0][index]  # начальное значение флага
     count = 0
     for i in range(len(lst)):
-        if lst[i][index] != fl:
-            fl = lst[i][index]
-            count += 1
+        if lst[i][index] != 0:  # если знак = 0, то значение флага не изменяется и проверяется следующее значение
+            if lst[i][index] != fl:
+                fl = lst[i][index]
+                count += 1
     return count
 
 
