@@ -144,7 +144,7 @@ def define_sign_before_number(func):
 
 
 def count_sign_change(lst, index):
-    # функция, считающая число изменений знака в системе Штурма
+    # функция, считающая число изменений знака в системе Штурма (для бесконеччностей)
     fl = lst[0][index]  # начальное значение флага
     count = 0
     for i in range(len(lst)):
@@ -156,7 +156,7 @@ def count_sign_change(lst, index):
 
 
 def calculation_func_value(func, x_value):
-    # вычисление значения фунцции при заданном аргументе 'x_value'
+    # вычисление значения функции при заданном аргументе 'x_value'
     y = func.subs({x: x_value})
     return y
 
@@ -175,10 +175,29 @@ def define_sign_func_value(func_value):
 inf_table = create_shturm_table(f_list)  # таблица Штурма для плюс\минус бесконечности
 valid_roots = abs(count_sign_change(inf_table, 0) - count_sign_change(inf_table, 1))  # количество действительных корней
 
+sign_list = []  # список знаков вычисленных значений функции
+for i in range(len(f_list)):
+    sign_list.append(define_sign_func_value(calculation_func_value(f_list[i], 0)))
+
+
+def count_sign_func_change(lst):
+    # функция, считающая число изменений знака в системе Штурма (для вычисленных значений функций)
+    fl = lst[0]  # начальное значение флага
+    count = 0
+    for i in range(len(lst)):
+        if lst[i] != 0:  # если знак = 0, то значение флага не изменяется и проверяется следующее значение
+            if lst[i] != fl:
+                fl = lst[i]
+                count += 1
+    return count
+
+
 print(calculation_func_value(f_list[3], 0))
 print(define_sign_func_value(calculation_func_value(f_list[3], 0)))
 print(f_list)
 print(inf_table)
 print(valid_roots)
+print(sign_list)
+print(count_sign_func_change(sign_list))
 
 # print(f_list[0].subs({x: 0}))  вычисляет значение функции из списка с x=0
