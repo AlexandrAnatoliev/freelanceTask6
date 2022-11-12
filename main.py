@@ -154,13 +154,17 @@ def count_sign_change(lst, index):
     return count
 
 
+def calculation_func_value(func, x_value):
+    # вычисление значения фунцции при заданном аргументе 'x_value'
+    y = func.subs({x: x_value})
+    return y
+
+
 inf_table = create_shturm_table(f_list)  # таблица Штурма для плюс\минус бесконечности
 valid_roots = abs(count_sign_change(inf_table, 0) - count_sign_change(inf_table, 1))  # количество действительных корней
-print(solve(Eq(f_list[0], 2), x))  # неправильно вычисляет
-
+print(calculation_func_value(f_list[3], 0))
 print(f_list)
 print(inf_table)
 print(valid_roots)
 
-# print(solve(Eq(f), x))  # решить уравнение f=0, выводит [ответ1,ответ2,...]
-# print(diff(f, x))  # найти производную функции F=0
+# print(f_list[0].subs({x: 0}))  вычисляет значение функции из списка с x=0
