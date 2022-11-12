@@ -184,10 +184,6 @@ def count_sign_func_change(lst):
     return count
 
 
-inf_table = create_shturm_table(f_list)  # таблица Штурма для плюс\минус бесконечности
-valid_roots = abs(count_sign_change(inf_table, 0) - count_sign_change(inf_table, 1))  # количество действительных корней
-
-
 def create_sign_list(lst, arg_x):
     # функция, вычисляющая значение функции при заданном аргументе 'x' и создающая список знаков(+\-)
     sign_list = []  # список знаков вычисленных значений функции
@@ -196,12 +192,30 @@ def create_sign_list(lst, arg_x):
     return sign_list
 
 
+# определим количество изменений знака системы штурма при плюс\минус бесконечности
+# Определим количество действительных корней как разницу между ними
+inf_table = create_shturm_table(f_list)  # таблица Штурма для плюс\минус бесконечности
+valid_roots = abs(count_sign_change(inf_table, 0) - count_sign_change(inf_table, 1))  # количество действительных корней
+
+# определим диапазон, в котором будем искать корни.
+# Вычисляем количество изменений знака системы Штурма при разных значениях аргумента 'x'.
+# Искомый диапазон от '0' изменений до числа, равного количествку действительных корней.
+# !!! разобраться!!!
+max_root_list = []  # список количеств изменений знака системы Штурма при разных значениях аргумента 'x'.
+max_root_list.append(count_sign_func_change(create_sign_list(f_list, 0)))  # x = 0
+x_arg = 1  # начальное значение х
+while (0 not in max_root_list) and (valid_roots not in max_root_list):
+    # пока не найдены значения изменений системы штурма: '0' и 'количество действительных корней'
+    max_root_list.append(count_sign_func_change(create_sign_list(f_list, x_arg)))
+    max_root_list.append(count_sign_func_change(create_sign_list(f_list, -x_arg)))
+    x_arg += 1
+
+print(max_root_list)
+
 print(calculation_func_value(f_list[3], 0))
 print(define_sign_func_value(calculation_func_value(f_list[3], 0)))
 print(f_list)
 print(inf_table)
 print(valid_roots)
-print(create_sign_list(f_list,0))
-# print(count_sign_func_change(sign_list))
 
 # print(f_list[0].subs({x: 0}))  вычисляет значение функции из списка с x=0
