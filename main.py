@@ -145,7 +145,7 @@ def define_sign_before_number(func):
 
 def count_sign_change(lst, index):
     # функция, считающая число изменений знака в системе Штурма
-    fl = lst[0][index]  # начальное значение
+    fl = lst[0][index]  # начальное значение флага
     count = 0
     for i in range(len(lst)):
         if lst[i][index] != fl:
@@ -160,9 +160,22 @@ def calculation_func_value(func, x_value):
     return y
 
 
+def define_sign_func_value(func_value):
+    # функция, определяющая знак вычисленного значения функции
+    if func_value < 0:
+        fl = 'minus'
+    elif func_value > 0:
+        fl = 'plus'
+    else:
+        fl = 0
+    return fl
+
+
 inf_table = create_shturm_table(f_list)  # таблица Штурма для плюс\минус бесконечности
 valid_roots = abs(count_sign_change(inf_table, 0) - count_sign_change(inf_table, 1))  # количество действительных корней
+
 print(calculation_func_value(f_list[3], 0))
+print(define_sign_func_value(calculation_func_value(f_list[3], 0)))
 print(f_list)
 print(inf_table)
 print(valid_roots)
