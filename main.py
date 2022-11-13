@@ -203,13 +203,15 @@ valid_roots = abs(count_sign_change(inf_table, 0) - count_sign_change(inf_table,
 # !!! разобраться!!!
 max_root_list = []  # список количеств изменений знака системы Штурма при разных значениях аргумента 'x'.
 max_root_list.append(count_sign_func_change(create_sign_list(f_list, 0)))  # x = 0
+max_root_list.append(count_sign_func_change(create_sign_list(f_list, 3)))  # x = 0
 x_arg = 1  # начальное значение х
-while (0 not in max_root_list) and (valid_roots not in max_root_list):
+#while (0 not in max_root_list):
     # пока не найдены значения изменений системы штурма: '0' и 'количество действительных корней'
-    max_root_list.append(count_sign_func_change(create_sign_list(f_list, x_arg)))
-    max_root_list.append(count_sign_func_change(create_sign_list(f_list, -x_arg)))
-    x_arg += 1
-
+#    print(max_root_list)
+#    max_root_list.append(count_sign_func_change(create_sign_list(f_list, x_arg)))
+#    max_root_list.append(count_sign_func_change(create_sign_list(f_list, -x_arg)))
+#    x_arg += 1
+#print(0 not in max_root_list)
 print(max_root_list)
 
 print(calculation_func_value(f_list[3], 0))
