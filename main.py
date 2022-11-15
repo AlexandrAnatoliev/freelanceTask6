@@ -117,10 +117,10 @@ def define_sign_infinity(func):
     if degree_x(func) == 0:  # если функция - число
         if define_sign_before_number(func) == 'plus':  # если знак перед числом 'плюс'
             sign_plus_inf = '+'
-            sign_minus_inf = '-'
+            sign_minus_inf = '+'
         else:
             sign_plus_inf = '-'
-            sign_minus_inf = '+'
+            sign_minus_inf = '-'
     else:
         if degree_x(func) % 2 == 0:  # если функция четная
             sign_plus_inf = '+'  # знак функции при плюс-бесконечности
