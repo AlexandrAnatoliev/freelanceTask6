@@ -203,39 +203,38 @@ def create_sign_list(lst, arg_x):
 inf_table = create_shturm_table(f_list)  # таблица Штурма для плюс\минус бесконечности
 valid_roots = abs(count_sign_change(inf_table, 0) - count_sign_change(inf_table, 1))  # количество действительных корней
 
-# определим диапазон, в котором будем искать корни.
-# Вычисляем количество изменений знака системы Штурма при разных значениях аргумента 'x'.
-# Искомый диапазон от '0' изменений до числа, равного количествку действительных корней.
-# !!! разобраться!!!
-max_root_list = []  # список количеств изменений знака системы Штурма при разных значениях аргумента 'x'.
-max_root_list.append(count_sign_func_change(create_sign_list(f_list, -12)))  # x = 0
-max_root_list.append(count_sign_func_change(create_sign_list(f_list, -9)))  # x = 0
-max_root_list.append(count_sign_func_change(create_sign_list(f_list, -6)))  # x = 0
-max_root_list.append(count_sign_func_change(create_sign_list(f_list, -3)))  # x = 0
-max_root_list.append(count_sign_func_change(create_sign_list(f_list, 0)))  # x = 0
-max_root_list.append(count_sign_func_change(create_sign_list(f_list, 3)))  # x = 0
-max_root_list.append(count_sign_func_change(create_sign_list(f_list, 6)))  # x = 0
-max_root_list.append(count_sign_func_change(create_sign_list(f_list, 9)))  # x = 0
-max_root_list.append(count_sign_func_change(create_sign_list(f_list, 12)))  # x = 0
-max_root_list.append(count_sign_func_change(create_sign_list(f_list, 15)))  # x = 0
-print(f_list[0].subs({x: -9}))  # вычисляет значение функции из списка с x=0
-print(f_list[0].subs({x: -6}))  # вычисляет значение функции из списка с x=0
-print(f_list[0].subs({x: 0}))  # вычисляет значение функции из списка с x=0
-print(f_list[0].subs({x: 3}))  # вычисляет значение функции из списка с x=0
-print(f_list[0].subs({x: 6}))  # вычисляет значение функции из списка с x=0
-print(f_list[0].subs({x: 9}))  # вычисляет значение функции из списка с x=0
-x_arg = 1  # начальное значение х
-# while (0 not in max_root_list):
-# пока не найдены значения изменений системы штурма: '0' и 'количество действительных корней'
-#    print(max_root_list)
-#    max_root_list.append(count_sign_func_change(create_sign_list(f_list, x_arg)))
-#    max_root_list.append(count_sign_func_change(create_sign_list(f_list, -x_arg)))
-#    x_arg += 1
-# print(0 not in max_root_list)
-print(max_root_list)
+# определим диапазон, в котором будем искать корни - от '0' до числа действительных корней.
+# в этом диапазоне получаем отсортированный список [аргумент, количество корней функции] по возрастанию аргумента.
+# Выделить искомые диапазоны, в которох находятся корни уравнения
 
-print(calculation_func_value(f_list[3], 0))
-print(define_sign_func_value(calculation_func_value(f_list[3], 0)))
+max_root_list = []  # список количеств изменений знака системы Штурма при разных значениях аргумента 'x'.
+max_root_list.append(count_sign_func_change(create_sign_list(f_list, 0)))  # x = 0
+arg_max_root_list = [[0, max_root_list[0]]]  # список [аргумент, количество корней функции]
+x_arg = 1  # второе значение х = 1
+
+while (0 not in max_root_list) or (valid_roots not in max_root_list):
+    # составим список [аргумент, количество корней функции] для разных аргументов
+    # пока не найдены значения изменений системы штурма: '0' и 'количество действительных корней'
+    # не знаю почему, но требуется "или" вместо "и"
+    max_root_list.append(count_sign_func_change(create_sign_list(f_list, x_arg)))
+    arg_max_root_list.append([x_arg, count_sign_func_change(create_sign_list(f_list, x_arg))])
+    max_root_list.append(count_sign_func_change(create_sign_list(f_list, -x_arg)))
+    arg_max_root_list.append([-x_arg, count_sign_func_change(create_sign_list(f_list, -x_arg))])
+    x_arg += 1
+
+# отсортированный список [аргумент, количество корней функции] по возрастанию аргумента
+arg_max_root_list.sort()
+
+roots_ranges_list = []  # список диапазонов аргументов, в которых лежат корни функции
+root = arg_max_root_list[0][1]  # запоминаем значение "количество корней функции" (изменений знака)
+for i in range(len(arg_max_root_list)):
+    # определяем диапазоны, на которых лежат корни
+    if root != arg_max_root_list[i][1]:  # Если количество изменений знака функции изменилось
+        root = arg_max_root_list[i][1]
+        roots_ranges_list.append([arg_max_root_list[i - 1][0], arg_max_root_list[i][0]])  # диапазон
+
+print(arg_max_root_list)
+print(roots_ranges_list)
 print(f_list)
 print(inf_table)
 print(valid_roots)
