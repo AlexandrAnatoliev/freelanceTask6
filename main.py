@@ -21,21 +21,26 @@ from sympy import *
 
 
 def coeff_before_x(function):
-    # функция, определяющая коэффициент перед первым 'x' в уравнении  !!! не учитывает возможность отрицательного числа
-    # 466778 - 5678999*x выводит 567899 а должен -567899!!!!
+    # функция, определяющая коэффициент перед первым 'x' в уравнении
+    fl_sign = 'plus'  # флаг знака числа
     f_string = str(function)
     x_index = f_string.index('x')
     if ' ' in f_string[:x_index]:  # если есть пробел перед 'x'
         space_count = f_string.count(' ', 0, x_index)  # число пробелов до 'x'
         space_index = 0
         for i in range(space_count):
-            space_index = f_string.find(' ', space_index + 1, x_index)
+            space_index = f_string.find(' ', space_index + 1, x_index)  # последний пробел - пробел перед числом
+        if x_index == len(f_string) - 1:  # если 'x' крайний справа
+            fl_sign = 'plus' if '+' == f_string[space_index - 1] else 'minus'
     else:
         space_index = -1
+
     if x_index == 0:
         coefficient = 1
     else:
-        coefficient = int(f_string[space_index + 1:x_index - 1])
+        # если выражение типа 56789 - 98765*x, то коэффициент с отрицательным знаком
+        coefficient = int(f_string[space_index + 1:x_index - 1]) if fl_sign == 'plus' else -int(
+            f_string[space_index + 1:x_index - 1])
     return coefficient
 
 
@@ -206,13 +211,13 @@ max_root_list = []  # список количеств изменений зна�
 max_root_list.append(count_sign_func_change(create_sign_list(f_list, 0)))  # x = 0
 max_root_list.append(count_sign_func_change(create_sign_list(f_list, 3)))  # x = 0
 x_arg = 1  # начальное значение х
-#while (0 not in max_root_list):
-    # пока не найдены значения изменений системы штурма: '0' и 'количество действительных корней'
+# while (0 not in max_root_list):
+# пока не найдены значения изменений системы штурма: '0' и 'количество действительных корней'
 #    print(max_root_list)
 #    max_root_list.append(count_sign_func_change(create_sign_list(f_list, x_arg)))
 #    max_root_list.append(count_sign_func_change(create_sign_list(f_list, -x_arg)))
 #    x_arg += 1
-#print(0 not in max_root_list)
+# print(0 not in max_root_list)
 print(max_root_list)
 
 print(calculation_func_value(f_list[3], 0))
