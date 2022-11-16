@@ -233,6 +233,7 @@ for i in range(len(arg_max_root_list)):
         root = arg_max_root_list[i][1]
         roots_ranges_list.append([arg_max_root_list[i - 1][0], arg_max_root_list[i][0]])  # диапазон
 
+
 print(arg_max_root_list)
 print(roots_ranges_list)
 print(f_list)
