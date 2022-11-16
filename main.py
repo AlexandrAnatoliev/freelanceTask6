@@ -233,11 +233,32 @@ for i in range(len(arg_max_root_list)):
         root = arg_max_root_list[i][1]
         roots_ranges_list.append([arg_max_root_list[i - 1][0], arg_max_root_list[i][0]])  # диапазон
 
+# выводим таблицу штурма
+# ***********************************************************************************************************************
+print("     Таблица Штурма:     ")
+print(str(' ').rjust(33), end='')
+for i in range(len(roots_ranges_list)):  # вывод значений аргумента
+    print(roots_ranges_list[i][0], end='        ')
+    print(roots_ranges_list[i][1], end='        ')
+print()  # перенос строки
 
-print(arg_max_root_list)
-print(roots_ranges_list)
-print(f_list)
-print(inf_table)
-print(valid_roots)
+# выводим функцию и ее знак при заданных значениях аргумента
+for j in range(len(f_list)):
+    print(str(f_list[j]).rjust(25), end='    ')  # выравниваем столбцы
+    for i in range(len(roots_ranges_list)):
+        print(f"{str(define_sign_func_value(calculation_func_value(f_list[j], roots_ranges_list[i][0]))).rjust(6)}",
+              end='    ')
+        print(f"{str(define_sign_func_value(calculation_func_value(f_list[j], roots_ranges_list[i][1]))).rjust(6)}",
+              end='    ')
+    print()
+
+print(str(" ").rjust(33), end='')
+# выводим количество изменений знака функции при заданном аргументе
+for i in range(len(roots_ranges_list)):
+    print(count_sign_func_change(create_sign_list(f_list, roots_ranges_list[i][0])), end='         ')
+    print(count_sign_func_change(create_sign_list(f_list, roots_ranges_list[i][1])), end='         ')
+
+print()
+print("Корни лежат на: ", *roots_ranges_list)
 
 # print(f_list[0].subs({x: 0}))  вычисляет значение функции из списка с x=0
